@@ -21,8 +21,6 @@ const sizes = {
     height: windowHeight
 }
 
-// GUI
-const gui = new GUI();
 
 // Canvas
 const canvas = document.querySelector('canvas')
@@ -36,17 +34,17 @@ const textureLoader = new THREE.TextureLoader();
 const matcapTexture = textureLoader.load('/textures/1.png')
 matcapTexture.colorSpace = THREE.SRGBColorSpace
 
-
-
 // Mouse
 
 const mouse = new THREE.Vector2()
-//////// BOOk //////////
+
+
+//////// FUTURE BOOK //////////
 // Geometry
 let cubeGeometry = new THREE.BoxGeometry(1, 1, 1); // Adjust the size as needed
 
 // Material
-const material = new THREE.MeshMatcapMaterial( {
+const material = new THREE.MeshNormalMaterial( {
     normalScale: new THREE.Vector2( 0.15, 0.15 ),
     matcap: matcapTexture
 } );
@@ -55,12 +53,11 @@ const material = new THREE.MeshMatcapMaterial( {
 const cube = new THREE.Mesh( cubeGeometry, material );
 // Add the mesh to the scene
 scene.add(cube);;
-// //////////////////////////////
 
 // Particles
 
 const particlesGeometry = new THREE.BufferGeometry();
-const particlesCount = 3000;
+const particlesCount = 500;
 const positions = new Float32Array(particlesCount * 3)
 for (let i = 0; i < particlesCount * 3; i++) {
     positions[i] = (Math.random() - 0.5) * 50
@@ -70,9 +67,9 @@ particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 
 const particleTexture = textureLoader.load('/textures/5.png')
 
 const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.1,
+    size: 0.4,
     sizeAttenuation: true,
-    color: '#000000',//ff88cc
+    color: '#a67c00',
     transparent: true,
     alphaMap: particleTexture,
     alphaTest: 0.001,
@@ -82,26 +79,6 @@ const particlesMaterial = new THREE.PointsMaterial({
 
 const particles = new THREE.Points(particlesGeometry, particlesMaterial)
 scene.add(particles)
-
-// LIGHTS
-let particleLight;
-
-particleLight = new THREE.Mesh(
-    new THREE.SphereGeometry( .05, 8, 8 ),
-    new THREE.MeshBasicMaterial( { color: 0xffffff } )
-    );
-scene.add( particleLight );
-particleLight.add( new THREE.PointLight( 0xffffff, 2 ) );
-
-const ambientLight = new THREE.AmbientLight(0xffffff, 10)
-scene.add(ambientLight)
-
-const pointLight = new THREE.PointLight(0xffffff, 10)
-pointLight.position.x = 2
-pointLight.position.y = 3
-pointLight.position.z = 4
-scene.add(pointLight)
-
 
 
 // Define the target mesh (assuming you have a cube mesh named 'cube')
@@ -115,7 +92,6 @@ scene.add(camera);
 const controls = new OrbitControls( camera, canvas );
 controls.update();
 
-
 // Renderer
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
@@ -124,10 +100,6 @@ const renderer = new THREE.WebGLRenderer({
 
 // Update renderer size
 renderer.setSize(sizes.width, sizes.height)
-
-
-
-
 
 // Define mouse variables
 let prevMouseX: number | null = null;
@@ -211,15 +183,21 @@ function rotateCube(deltaX: number, deltaY: number) {
     cube.rotation.x += deltaY * rotationSpeed;
 }
 
-function move (){
-    gsap.to(cube.position, { duration: 2, x: mouse.x * 4, y: mouse.y * 4 })
-
+// Rotate particles group
+function rotateParticles() {
+    particles.rotation.y += 0.001;
 }
+
+
+
+
+
+
 // Clock
 // const clock = new THREE.Clock();
 
 const tick = () => {
-
+    rotateParticles();
     // Render
     renderer.render(scene, camera);
 
