@@ -15,7 +15,7 @@ export function bgRotationSystem(scene: THREE.Scene, texture:THREE.Material): TH
     }
 
     // Geometry
-    let cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5); // Adjust the size as needed
+    let cubeGeometry = new THREE.BoxGeometry(8, 4.5, 0.01); // Adjust the size as needed
 
     // Material
     const material = new THREE.MeshNormalMaterial( {
@@ -27,10 +27,10 @@ export function bgRotationSystem(scene: THREE.Scene, texture:THREE.Material): TH
     const centerPoint = new THREE.Vector3(0, 0, 0); // Centre de la scène
 
     // Définir le rayon autour du point central
-    const radius = 5;
+    const radius = 10;
 
     // Nombre de cubes à placer
-    const numberOfCubes = 10;
+    const numberOfCubes = 5;
 
     // Angle entre chaque cube
     const angleIncrement = (2 * Math.PI) / numberOfCubes;
@@ -68,19 +68,17 @@ export function bgRotationSystem(scene: THREE.Scene, texture:THREE.Material): TH
         requestAnimationFrame(animate);
 
             // Faire tourner le groupe de cubes autour du point central
-            cubeGroup.rotation.y += 0.01; // Vitesse de rotation
+            cubeGroup.rotation.y += 0.005; // Vitesse de rotation
 
             cubeGroup.children.forEach((cube: THREE.Mesh) => {
 
-                const cubeAmp = getRandomNumber(0.1,0.3);
+                const cubeAmp = getRandomNumber(0.001,0.01);
 
-                const rotX = getRandomNumber(0,1);
-                const rotY = getRandomNumber(0,1);
-                const rotZ = getRandomNumber(0,1);
 
-                cube.rotation.x += cubeAmp * rotX; // Applique la rotation en radians
-                cube.rotation.y += cubeAmp * rotY;
-                cube.rotation.z += cubeAmp * rotZ;
+
+                cube.rotation.x += cubeAmp ; // Applique la rotation en radians
+                cube.rotation.y += cubeAmp ;
+                cube.rotation.z += cubeAmp;
             });
         
     }
