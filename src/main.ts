@@ -73,6 +73,8 @@ camera.position.set(0, 0, 5); // Initial position relative to the target
 scene.add(camera);
 
 const controls = new OrbitControls( camera, canvas );
+controls.enableZoom = false;
+controls.rotateSpeed  = .3
 controls.update();
 
 // -------    Camera & Controls end   ----------
