@@ -10,8 +10,12 @@ import ChackraFont from '../public/Chakra Petch_Bold.json'
 
 export function bgRotationSystem(scene: THREE.Scene, texture:THREE.Material): THREE.Mesh {
 
+    function getRandomNumber(min: number, max: number): number {
+        return Math.random() * (max - min) + min;
+    }
+
     // Geometry
-    let cubeGeometry = new THREE.BoxGeometry(1, 1, 1); // Adjust the size as needed
+    let cubeGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5); // Adjust the size as needed
 
     // Material
     const material = new THREE.MeshNormalMaterial( {
@@ -19,10 +23,77 @@ export function bgRotationSystem(scene: THREE.Scene, texture:THREE.Material): TH
         matcap: texture
     } );
 
-    // Mesh
-    const cube = new THREE.Mesh( cubeGeometry, material );
-    // Add the mesh to the scene
-    scene.add(cube);
+    // Définir le point central autour duquel placer les cubes
+    const centerPoint = new THREE.Vector3(0, 0, 0); // Centre de la scène
+
+    // Définir le rayon autour du point central
+    const radius = 5;
+
+    // Nombre de cubes à placer
+    const numberOfCubes = 10;
+
+    // Angle entre chaque cube
+    const angleIncrement = (2 * Math.PI) / numberOfCubes;
+    const cubeGroup = new THREE.Group();
+
+    // Parcourir les cubes et les placer autour du point central
+    for (let i = 0; i < numberOfCubes; i++) {
+        // Calculer l'angle actuel
+        const angle = i * angleIncrement;
+
+        // Calculer les coordonnées x et z du cube en fonction de l'angle et du rayon
+        const x = centerPoint.x + radius * Math.cos(angle);
+        const z = centerPoint.z + radius * Math.sin(angle);
+
+        // Créer le cube
+        const cube = new THREE.Mesh(cubeGeometry, material);
+
+        // Positionner le cube aux coordonnées calculées
+        cube.position.set(x, centerPoint.y, z);
+
+        // Ajouter le cube à la scène
+        scene.add(cube);
+
+        cubeGroup.add(cube);
+    }
+
+
+    //GROUPS + ROTATIONS
+
+    // Ajouter le groupe à la scène
+    scene.add(cubeGroup);
+
+    // Fonction d'animation pour faire tourner le groupe de cubes autour du point central
+    function animate() {
+        requestAnimationFrame(animate);
+
+            // Faire tourner le groupe de cubes autour du point central
+            cubeGroup.rotation.y += 0.01; // Vitesse de rotation
+
+            cubeGroup.children.forEach((cube: THREE.Mesh) => {
+
+                const cubeAmp = getRandomNumber(0.1,0.3);
+
+                const rotX = getRandomNumber(0,1);
+                const rotY = getRandomNumber(0,1);
+                const rotZ = getRandomNumber(0,1);
+
+                cube.rotation.x += cubeAmp * rotX; // Applique la rotation en radians
+                cube.rotation.y += cubeAmp * rotY;
+                cube.rotation.z += cubeAmp * rotZ;
+            });
+        
+    }
+    animate();
+
+
+
+
+
+
+
+
+
 
     return { };
 }

@@ -117,10 +117,11 @@ document.addEventListener('mousemove', (event) => {
 
     console.log('Mouse values are not null, updating mouse position')
     console.log('Previous mouse position:', prevMouseX, prevMouseY);
-     
+
     // Normalize mouse coordinates to the range [-1, 1]
-    const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+const mouseX = ((event.clientX - prevMouseX) / (window.innerWidth)) * 2;
+const mouseY = ((event.clientY - prevMouseY) / (window.innerHeight)) * 2;
+
 
     console.log('Current mouse position:', mouseX, mouseY);
     // Calculate the change in mouse position
