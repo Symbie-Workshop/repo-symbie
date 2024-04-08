@@ -11,8 +11,19 @@
   </head>
   <body>
     <div id="app">
+      <div class="header">
+        <img class="logo" src="./public/logo_symbie.svg"/>
+      </div>
       <canvas id="canvas"></canvas>
+      <div class="footer">
+        <button id="btnInfos" class="btn black">Informations</button>
+      </div>
+      <div id="infoLayout" class="hide">
+        <img id="closeBtn" src="./public/close.svg"/>
+        Layout
+      </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="/src/layout.ts"></script>
   </body>
 </html>

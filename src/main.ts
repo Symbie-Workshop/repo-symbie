@@ -107,25 +107,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Update mouse coordinates on mouse move
 document.addEventListener('mousemove', (event) => {
-
     // Capture initial mouse position if it hasn't been captured yet
     if (!prevMouseX || !prevMouseY) {
-        console.log("Mouse values are null or zero, setting initial values");
         prevMouseX = (event.clientX / window.innerWidth) * 2 - 1;
         prevMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-        console.log('Setting real mouse positions to :', prevMouseX, prevMouseY);
         return; // Exit the event listener to avoid further processing
     }
-
-    console.log('Mouse values are not null, updating mouse position')
-    console.log('Previous mouse position:', prevMouseX, prevMouseY);
-
+     
     // Normalize mouse coordinates to the range [-1, 1]
-const mouseX = ((event.clientX - prevMouseX) / (window.innerWidth)) * 2;
-const mouseY = ((event.clientY - prevMouseY) / (window.innerHeight)) * 2;
-
-
-    console.log('Current mouse position:', mouseX, mouseY);
+    const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+    const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
     // Calculate the change in mouse position
     const deltaX = mouseX - prevMouseX;
     const deltaY = mouseY - prevMouseY;
@@ -175,11 +166,6 @@ function rotateCube(deltaX: number, deltaY: number) {
 function rotateParticles() {
     particles.rotation.y += 0.001;
 }
-
-
-
-
-
 
 // Clock
 // const clock = new THREE.Clock();
