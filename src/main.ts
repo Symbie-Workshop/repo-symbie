@@ -5,39 +5,15 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js'
 import {TextGeometry} from 'three/addons/geometries/TextGeometry.js'
 
+import { setupScene, SceneSetupResult } from './sceneSetup';
 
-import ChackraFont from '../public/Chakra Petch_Bold.json'
+import { bgRotationSystem } from './bgRotationSystem';
 
-
-// General const and vars
-
-// Window Size
-
-const windowWidth = window.innerWidth;
-const windowHeight = window.innerHeight;
-
-const sizes = {
-    width: windowWidth,
-    height: windowHeight
-}
-
-
-// Canvas
-const canvas = document.querySelector('canvas')
-
-// Scene
-const scene = new THREE.Scene()
-scene.background = new THREE.Color(0xe6e4e1)
-
-// Textures
-const textureLoader = new THREE.TextureLoader();
-const matcapTexture = textureLoader.load('/textures/1.png')
-matcapTexture.colorSpace = THREE.SRGBColorSpace
+// Initialisation de la scène - Window Size - canvas
+const { scene, sizes, canvas, matcapTexture, textureLoader }: SceneSetupResult = setupScene();
 
 // Mouse
-
 const mouse = new THREE.Vector2()
-
 
 //////// FUTURE BOOK //////////
 // Geometry
@@ -52,10 +28,13 @@ const material = new THREE.MeshNormalMaterial( {
 // Mesh
 const cube = new THREE.Mesh( cubeGeometry, material );
 // Add the mesh to the scene
-scene.add(cube);;
+scene.add(cube);
 
-// Particles
 
+bgRotationSystem(scene,matcapTexture);
+
+// -------    Particles start   ----------
+ 
 const particlesGeometry = new THREE.BufferGeometry();
 const particlesCount = 500;
 const positions = new Float32Array(particlesCount * 3)
@@ -80,9 +59,13 @@ const particlesMaterial = new THREE.PointsMaterial({
 const particles = new THREE.Points(particlesGeometry, particlesMaterial)
 scene.add(particles)
 
+// -------    Particles end   ----------
+
 
 // Define the target mesh (assuming you have a cube mesh named 'cube')
 const targetMesh = cube;
+
+// -------    Camera & Controls start   ----------
 
 // Define camera variables
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
@@ -91,6 +74,8 @@ scene.add(camera);
 
 const controls = new OrbitControls( camera, canvas );
 controls.update();
+
+// -------    Camera & Controls end   ----------
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
