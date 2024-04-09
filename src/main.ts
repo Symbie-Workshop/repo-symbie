@@ -6,11 +6,13 @@ import { FontLoader } from 'three/addons/loaders/FontLoader.js'
 import {TextGeometry} from 'three/addons/geometries/TextGeometry.js'
 
 import { setupScene, SceneSetupResult } from './sceneSetup';
-
+import { materializeTexture } from './materializeTexture';
 import { bgRotationSystem } from './bgRotationSystem';
 
 // Initialisation de la scène - Window Size - canvas
 const { scene, sizes, canvas, matcapTexture, textureLoader }: SceneSetupResult = setupScene();
+
+const testTexture = textureLoader.load('/textures/test.jpg') //load custom texture out of sceneSetup
 
 // Mouse
 const mouse = new THREE.Vector2()
@@ -19,11 +21,15 @@ const mouse = new THREE.Vector2()
 // Geometry
 let cubeGeometry = new THREE.BoxGeometry(1, 1, 1); // Adjust the size as needed
 
-// Material
-const material = new THREE.MeshNormalMaterial( {
-    normalScale: new THREE.Vector2( 0.15, 0.15 ),
-    matcap: matcapTexture
-} );
+    // Material
+    const material = new THREE.MeshNormalMaterial( {
+        normalScale: new THREE.Vector2( 0.15, 0.15 ),
+        map: matcapTexture
+    } );
+
+const materialTest: THREE.MeshBasicMaterial = materializeTexture(testTexture);
+
+console.log(materialTest)
 
 // Mesh
 const cube = new THREE.Mesh( cubeGeometry, material );
@@ -31,7 +37,7 @@ const cube = new THREE.Mesh( cubeGeometry, material );
 scene.add(cube);
 
 
-bgRotationSystem(scene,matcapTexture);
+bgRotationSystem(scene,materialTest);
 
 // -------    Particles start   ----------
  
