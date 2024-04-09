@@ -126,8 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set initial mouse and cube position to the center of the screen
     prevMouseX = 0;
     prevMouseY = 0; 
-    mouse.x = prevMouseX;
-    mouse.y = prevMouseY;
+    // mouse.x = prevMouseX;
+    // mouse.y = prevMouseY;
     cube.position.x = prevMouseX;
     cube.position.y = prevMouseY;
 });
@@ -137,13 +137,14 @@ document.addEventListener('mousemove', (event) => {
     // Capture initial mouse position if it hasn't been captured yet
     if (!prevMouseX || !prevMouseY) {
         prevMouseX = (event.clientX / window.innerWidth) * 2 - 1;
-        prevMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        prevMouseY = (event.clientY / window.innerHeight) * 2 + 1;
+
         return; // Exit the event listener to avoid further processing
     }
      
     // Normalize mouse coordinates to the range [-1, 1]
     const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+    const mouseY = (event.clientY / window.innerHeight) * 2 + 1;
     // Calculate the change in mouse position
     const deltaX = mouseX - prevMouseX;
     const deltaY = mouseY - prevMouseY;
@@ -167,10 +168,10 @@ function moveCamera(deltaX: number, deltaY: number) {
     const newPosition = camera.position.clone();
 
     // Rotate camera around the target (horizontal movement)
-    newPosition.applyAxisAngle(new THREE.Vector3(0, 1, 0), - deltaY * movementSpeed);
+    newPosition.applyAxisAngle(new THREE.Vector3(0, 1, 0), - deltaX * movementSpeed);
 
     // Move camera up or down (vertical movement)
-    newPosition.applyAxisAngle(new THREE.Vector3(1, 0, 0), - deltaX * movementSpeed);
+    newPosition.applyAxisAngle(new THREE.Vector3(1, 0, 0), - deltaY * movementSpeed);
 
     // Set the new camera position
     camera.position.copy(newPosition);
