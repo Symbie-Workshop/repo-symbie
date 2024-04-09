@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Symbié</title>
     <link rel="stylesheet" href="/src/style.css" />
-
-
   </head>
   <body>
     <div id="app">
@@ -17,10 +15,37 @@
       <canvas id="canvas"></canvas>
       <div class="footer">
         <button id="btnInfos" class="btn black">Informations</button>
+        <button id="btnCredits" class="btn white">Crédits</button>
       </div>
       <div id="infoLayout" class="hide">
-        <img id="closeBtn" src="./public/close.svg"/>
-        Layout
+        <div class="infoContentBox">
+          <img id="closeBtnInfos" src="./public/close.svg"/>
+          <img class="logo" src="./public/logo_symbie.svg"/>
+          <p> Symbié est un magazine indépendant créé par des étudiants ayant 
+            pour objectif de mettre en lumière les diverses réalités du handicap 
+            à travers une approche authentique et respectueuse.
+          </p>
+          <p> Notre démarche repose sur la collecte et le partage de témoignages
+              sincères de personnes en situation de handicap, mettant en avant leur
+             quotidien et leur perception de la représentation du handicap dans les 
+             médias et les institutions. Nous sommes déterminés à rendre ce sujet plus 
+             accessible et compréhensible pour tous.
+          </p>
+          <div class="contactBox">
+            <h3>Contact</h3>
+            <div id="contactGrid"></div>
+          </div>
+        </div>
+      </div>
+      <div id="creditsLayout" class="hide">
+        <div class="creditsContentBox">
+          <img id="closeBtnCredits" src="./public/close.svg"/>
+          <img class="logo" src="./public/logo_symbie.svg"/>
+          <div class="creditsBox">
+            <h3>Crédits</h3>
+            <div id="creditsGrid"></div>
+          </div>
+        </div>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>

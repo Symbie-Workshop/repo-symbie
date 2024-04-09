@@ -1,34 +1,133 @@
 // Get the button, close button, and menu layout elements by their IDs
-const button = document.getElementById('btnInfos');
+const buttonInfo = document.getElementById('btnInfos');
+const buttonCredits = document.getElementById('btnCredits');
 const infoLayout = document.getElementById('infoLayout');
-const closeButton = document.getElementById('closeBtn');
+const creditsLayout = document.getElementById('creditsLayout');
+const closeButtonInfos = document.getElementById('closeBtnInfos');
+const closeButtonCredits = document.getElementById('closeBtnCredits');
+
+const contactInfos: { title: string, link: string }[] = [
+    {
+        title: "Email",
+        link: "andredespouys@gmail.com"
+    },
+    {
+        title: "Instagram",
+        link: "dedespouys"
+    },
+    {
+        title: "Géré par",
+        link: "André le boss"
+    },
+    {
+        title: "Imprimé par ",
+        link: "MOI"
+    },
+];
+const teamMembers : { name : string, poste : string}[]= [
+    { name: "Thomas Marilleau", poste: "Print Designer & Directeur Artistique" },
+    { name: "Clément Madeleine", poste: "Motion Designer" },
+    { name: "Soufiyan Kahlaoui", poste: "Graphiste" },
+    { name: "Bartholomé Duteil", poste: "Photographe" },
+    { name: "Anaïs Akkouche", poste: "Product Owner & Directeur de Publication" },
+    { name: "Nino Berber", poste: "Développeur Web" },
+    { name: "Anaïs Delavier", poste: "Product Owner" },
+    { name: "Adrian Delgado", poste: "Graphiste" },
+    { name: "Elyser Cellier", poste: "Photographe" },
+    { name: "André Despouys-Pascual", poste: "Développeur Web" },
+    { name: "Lucas Duverneuil", poste: "Développeur Web" },
+    { name: "César Morel", poste: "Photographe" }
+  ];
+  
+
 
 // Function to show the menu
-function showMenu() {
-    if (infoLayout){
+function showMenu(context: string) {
+
+    if (context === 'infos'){
+        if (infoLayout){
         infoLayout.classList.remove('hide');
         infoLayout.classList.add('show');
-        const currentDisplay = button!.style.display;
-    
-        // If the menu is hidden, show it. Otherwise, hide it.
-        button!.style.display = currentDisplay === 'none' ? 'block' : 'none';
-        }
+            }
+    }else {
+        if (creditsLayout){
+            creditsLayout.classList.remove('hide');
+            creditsLayout.classList.add('show');
+                    }
+    }
+    // const currentInfoDisplay = buttonInfo!.style.display;
+    // buttonInfo!.style.display = currentInfoDisplay === 'none' ? 'block' : 'none';
+    // const currentCreditsDisplay = buttonCredits!.style.display;
+    // buttonCredits!.style.display = currentCreditsDisplay === 'none' ? 'block' : 'none';
+
+
+
 }
 // Function to hide the menu
-function hideMenu() {
+function hideMenu(context: string) {
+    if (context === 'infos'){
+
     if (infoLayout){
         infoLayout.classList.remove('show');
-        infoLayout.classList.add('hide');
-        const currentDisplay = button!.style.display;
-    
-        // If the menu is hidden, show it. Otherwise, hide it.
-        button!.style.display = currentDisplay === 'none' ? 'block' : 'none';
+        infoLayout.classList.add('hide');    
 
+    }
+    }else {
+        if (creditsLayout){
+            creditsLayout.classList.remove('show');
+            creditsLayout.classList.add('hide');        
+        }
     }
 }
 
+// Set Contact infos
+document.addEventListener('DOMContentLoaded', () => {
+    const contactGrid = document.getElementById('contactGrid');
+    const creditsGrid = document.getElementById('creditsGrid');
+
+    if (contactGrid) {
+        // Corrected the loop to iterate through the array
+        
+        contactInfos.forEach(info => {
+            // Create a div or any other element as a container for each contact info
+            const infoDiv = document.createElement('div');
+            infoDiv.classList.add('contactInfo'); // Add a class for potential styling
+
+            // Assuming you want to display the title and make the link clickable
+            infoDiv.innerHTML = `
+                <strong>${info.title}</strong> 
+                <a href="${info.link.startsWith('http') ? info.link : `mailto:${info.link}`}">${info.link}</a>
+            `;
+
+            // Append the newly created div to the contactGrid
+            contactGrid.appendChild(infoDiv);
+        });
+    }
+    if (creditsGrid) {
+        // Corrected the loop to iterate through the array
+        
+        teamMembers.forEach(info => {
+            // Create a div or any other element as a container for each contact info
+            const infoDiv = document.createElement('div');
+            infoDiv.classList.add('creditInfo'); // Add a class for potential styling
+
+            // Assuming you want to display the title and make the link clickable
+            infoDiv.innerHTML = `
+                <strong>${info.name}</strong> 
+                <p>${info.poste}</p>
+            `;
+
+            // Append the newly created div to the contactGrid
+            creditsGrid.appendChild(infoDiv);
+        });
+    }
+});
+
 // Attach the click event listener to the show menu button
-button!.addEventListener('click', showMenu);
+buttonInfo!.addEventListener('click', () => showMenu('infos'));
+buttonCredits!.addEventListener('click', () => showMenu('credits'));
 
 // Attach the click event listener to the close menu button
-closeButton?.addEventListener('click', hideMenu);
+closeButtonInfos!.addEventListener('click', () => hideMenu('infos'));
+closeButtonCredits!.addEventListener('click', () => hideMenu('creditrs'));
+
