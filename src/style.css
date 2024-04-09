@@ -47,6 +47,7 @@ h1 {
   align-items: center;
   justify-content: center;
   top: 2%;
+
 }
 .logo{
   width: 40%;
@@ -58,6 +59,8 @@ h1 {
   width: 100%;
   align-items: center;
   justify-content: center;
+  gap: 20px;
+  z-index: 2;
 }
 .btn {
   width: fit-content;
@@ -66,9 +69,13 @@ h1 {
   padding: 6px 8px;
   font-weight: bold;
 }
-.black {
+.white {
   background-color: white;
   color: black;
+}
+.black {
+  background-color: black;
+  color: white;
 }
 #canvas {
   display: block;
@@ -88,19 +95,74 @@ h1 {
   color: black;
   z-index: 5;
   display: flex; 
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: auto;
   height: 100%;
-  opacity: .5;
+  overflow: scroll;
   backdrop-filter: blur(10px);
+  padding: 20px;
 }
 
-#closeBtn{
+#closeBtnCredits, #closeBtnInfos{
   position: absolute;
-  right: 4%;
-  top: 4%;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+
+.infoContentBox, .creditsContentBox{
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: fit-content;
+  font-size: larger;
+  align-items: center;
+  justify-content: center;
+}
+
+.contactBox{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+}
+#contactGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
+  grid-gap: 10px;
+  padding: 10px; /* Add some padding around the grid */
+}
+
+.contactInfo, .creditInfo {
+  padding: 15px; /* Padding inside each contact info box */
+  display: flex; /* Use flexbox for internal alignment */
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: flex-start; /* Align items to the start (left) */
+  text-align: left; /* Ensure text aligns to the left */
+}
+
+.contactInfo a {
+  color: #007bff; /* Bright link color for contrast */
+  text-decoration: none; /* No underline on links */
+  margin-top: 5px; /* Space out the link a bit */
+}
+
+.contactInfo a:hover {
+  text-decoration: underline; /* Underline on hover for clear interactivity */
+}
+
+@media (max-width: 600px) {
+  #contactGrid {
+    grid-template-columns: 1fr; /* Single column on small screens */
+  }
 }
