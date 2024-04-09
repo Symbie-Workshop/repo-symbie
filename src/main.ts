@@ -92,7 +92,28 @@ const renderer = new THREE.WebGLRenderer({
 })
 
 // Update renderer size
-renderer.setSize(sizes.width, sizes.height)
+renderer.setSize(sizes.width-1, sizes.height-1)
+console.log(sizes.width+" : "+sizes.height)
+    // Mettez à jour la taille du canvas en fonction de la nouvelle taille de la fenêtre
+    canvas.style.width = document.documentElement.clientWidth-1 + 'px';
+    canvas.style.height = document.documentElement.clientHeight-1 + 'px';
+    // Mettez à jour la taille de rendu de Three.js
+    renderer.setSize(document.documentElement.clientWidth-1, document.documentElement.clientHeight-1);
+    camera.aspect = document.documentElement.clientWidth / document.documentElement.clientHeight;
+    camera.updateProjectionMatrix();
+
+
+// Écoutez l'événement de redimensionnement de la fenêtre
+window.addEventListener('resize', () => {
+    // Mettez à jour la taille du canvas en fonction de la nouvelle taille de la fenêtre
+    canvas.style.width = document.documentElement.clientWidth-1 + 'px';
+    canvas.style.height = document.documentElement.clientHeight-1 + 'px';
+    // Mettez à jour la taille de rendu de Three.js
+    renderer.setSize(document.documentElement.clientWidth-1, document.documentElement.clientHeight-1);
+    camera.aspect = document.documentElement.clientWidth / document.documentElement.clientHeight;
+    camera.updateProjectionMatrix();
+});
+
 
 // Define mouse variables
 let prevMouseX: number | null = null;
