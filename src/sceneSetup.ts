@@ -7,7 +7,12 @@ import {TextGeometry} from 'three/addons/geometries/TextGeometry.js'
 
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-import ChackraFont from '../public/Chakra Petch_Bold.json'
+import ChackraFont from '../public/Chakra Petch_Bold.json';
+
+import { SetAmbientLighting } from './LightHelper';
+import { setSkySphere } from './skyhelper';
+import { setupRenderer } from '../helpers/RendererHelper.js'
+
 
 export interface SceneSetupResult {
     scene: THREE.Scene;
@@ -16,6 +21,8 @@ export interface SceneSetupResult {
     matcapTexture:any;
     textureLoader:any;
 }
+
+const imagePath = '/sky.hdr';
 
 export function setupScene(): SceneSetupResult {
     // Ajoutez ici la configuration de la scène
@@ -35,21 +42,26 @@ export function setupScene(): SceneSetupResult {
 
     // Scene
     const scene = new THREE.Scene()
-    scene.background = new THREE.Color(0xe6e4e1)
+    scene.background = new THREE.Color(0x000000)
 
     // Textures
     const textureLoader = new THREE.TextureLoader();
     const matcapTexture = textureLoader.load('/textures/1.png')
     matcapTexture.colorSpace = THREE.SRGBColorSpace
 
+    // Lights
+	SetAmbientLighting(scene);
 
+    // Sky Sphere
+	setSkySphere(scene, imagePath);
+
+    // Return the scene and sizes
     return { scene, sizes, canvas, matcapTexture, textureLoader };
 }
 
 export function createGLTFModel( url : string, position : any, rotation : any, scale : any) {
     // Instantiate a loader
     const gltfLoader = new GLTFLoader();
-    //   console.info("LOADIG 3D OBJECT ");
     // Use a promise to handle the asynchronous loading
     return new Promise((resolve, reject) => {
       gltfLoader.load(
