@@ -3,8 +3,7 @@ const buttonInfo = document.getElementById('btnInfos');
 const buttonCredits = document.getElementById('btnCredits');
 const infoLayout = document.getElementById('infoLayout');
 const creditsLayout = document.getElementById('creditsLayout');
-const closeButtonInfos = document.getElementById('closeBtnInfos');
-const closeButtonCredits = document.getElementById('closeBtnCredits');
+const closeButton = document.getElementById('closeBtn');
 
 const contactInfos: { title: string, link: string }[] = [
     {
@@ -24,6 +23,7 @@ const contactInfos: { title: string, link: string }[] = [
         link: "MOI"
     },
 ];
+let contextClick : string = "";
 const teamMembers : { name : string, poste : string}[]= [
     { name: "Thomas Marilleau", poste: "Print Designer & Directeur Artistique" },
     { name: "Clément Madeleine", poste: "Motion Designer" },
@@ -34,7 +34,7 @@ const teamMembers : { name : string, poste : string}[]= [
     { name: "Anaïs Delavier", poste: "Product Owner" },
     { name: "Adrian Delgado", poste: "Graphiste" },
     { name: "Elyser Cellier", poste: "Photographe" },
-    { name: "André Despouys-Pascual", poste: "Développeur Web" },
+    { name: "André Despouys Pascual", poste: "Développeur Web" },
     { name: "Lucas Duverneuil", poste: "Développeur Web" },
     { name: "César Morel", poste: "Photographe" }
   ];
@@ -55,29 +55,26 @@ function showMenu(context: string) {
             creditsLayout.classList.add('show');
                     }
     }
-    // const currentInfoDisplay = buttonInfo!.style.display;
-    // buttonInfo!.style.display = currentInfoDisplay === 'none' ? 'block' : 'none';
-    // const currentCreditsDisplay = buttonCredits!.style.display;
-    // buttonCredits!.style.display = currentCreditsDisplay === 'none' ? 'block' : 'none';
+    closeButton!.classList.add('showBtn');
 
-
-
+    contextClick = context;
 }
 // Function to hide the menu
 function hideMenu(context: string) {
     if (context === 'infos'){
+        if (infoLayout){
+            infoLayout.classList.remove('show');
+            infoLayout.classList.add('hide');    
 
-    if (infoLayout){
-        infoLayout.classList.remove('show');
-        infoLayout.classList.add('hide');    
-
-    }
+        }
     }else {
         if (creditsLayout){
             creditsLayout.classList.remove('show');
             creditsLayout.classList.add('hide');        
         }
     }
+    closeButton!.classList.remove('showBtn');
+    closeButton!.classList.add('hide');  
 }
 
 // Set Contact infos
@@ -128,6 +125,5 @@ buttonInfo!.addEventListener('click', () => showMenu('infos'));
 buttonCredits!.addEventListener('click', () => showMenu('credits'));
 
 // Attach the click event listener to the close menu button
-closeButtonInfos!.addEventListener('click', () => hideMenu('infos'));
-closeButtonCredits!.addEventListener('click', () => hideMenu('creditrs'));
+closeButton!.addEventListener('click', () => hideMenu(contextClick));
 

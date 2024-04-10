@@ -1,105 +1,92 @@
 import * as THREE from 'three'
-import gsap from 'gsap'
-import GUI from 'lil-gui'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js'
-import {TextGeometry} from 'three/addons/geometries/TextGeometry.js'
 
-import { setupScene, SceneSetupResult } from './sceneSetup';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { setupRenderer } from './setupRenderer'
+import { setupScene, SceneSetupResult , createGLTFModel} from './sceneSetup';
 import { materializeTexture } from './materializeTexture';
 import { bgRotationSystem } from './bgRotationSystem';
+import { setParticles } from './setParticles';
 
-// Initialisation de la scène - Window Size - canvas
-const { scene, sizes, canvas, matcapTexture, textureLoader }: SceneSetupResult = setupScene();
+// Renderer
+const renderer = setupRenderer();
 
+// Set up the scene
+const { scene, sizes, canvas, textureLoader }: SceneSetupResult = setupScene();
+
+let magazine :any , targetMesh: any;
+// Load custom texture
 const testTexture = textureLoader.load('/textures/test.jpg') //load custom texture out of sceneSetup
 
-// Mouse
-const mouse = new THREE.Vector2()
+// const mouse = new THREE.Vector2()
 
-//////// FUTURE BOOK //////////
-// Geometry
-let cubeGeometry = new THREE.BoxGeometry(1, 1, 1); // Adjust the size as needed
+// Function to load the model and add it to the scene
+async function loadAndAddModel() {
+    try {
+        return await createGLTFModel(
+            '/magazine.glb',
+            [0, 0,-1.5],
+            [Math.PI / 2, 0, 0],
+            [9,9,9]
+        );
+  
+    } catch (error) {
+        console.error("Failed to load the model", error);
+        return null; // or handle the error as appropriate
+    }
+}
+// Immediately invoked async function expression to load the model
+const magazinePromise = (async () => {
+    return await loadAndAddModel();
+})();
 
-    // Material
-    const material = new THREE.MeshNormalMaterial( {
-        normalScale: new THREE.Vector2( 0.15, 0.15 ),
-        map: matcapTexture
-    } );
+// Later in your code, when you need to use the magazine model
+magazinePromise.then((createdMagazine: any) => {
+    if (createdMagazine) {
+        // Use magazine here, after it's been loaded
+        scene.add(createdMagazine.scene);
+        magazine = createdMagazine.scene;
+        console.log("Magazine loaded successfully", magazine);
+        // Define the target mesh 
+        targetMesh = magazine;
+    }
+}).catch(error => {
+    console.error("Error loading magazine:", error);
+});
 
-const materialTest: THREE.MeshBasicMaterial = materializeTexture(testTexture);
-
-console.log(materialTest)
-
-// Mesh
-const cube = new THREE.Mesh( cubeGeometry, material );
-// Add the mesh to the scene
-scene.add(cube);
-
+const materialTest: any = materializeTexture(testTexture);
 
 bgRotationSystem(scene,materialTest);
 
-// -------    Particles start   ----------
- 
-const particlesGeometry = new THREE.BufferGeometry();
-const particlesCount = 500;
-const positions = new Float32Array(particlesCount * 3)
-for (let i = 0; i < particlesCount * 3; i++) {
-    positions[i] = (Math.random() - 0.5) * 50
-}
+// -------    Particles    ----------
+const particles = setParticles(textureLoader);
+scene.add(particles);
 
-particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-const particleTexture = textureLoader.load('/textures/5.png')
-
-const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.4,
-    sizeAttenuation: true,
-    color: '#a67c00',
-    transparent: true,
-    alphaMap: particleTexture,
-    alphaTest: 0.001,
-    depthTest: false,
-    vertexColors: false,
-})
-
-const particles = new THREE.Points(particlesGeometry, particlesMaterial)
-scene.add(particles)
-
-// -------    Particles end   ----------
-
-
-// Define the target mesh (assuming you have a cube mesh named 'cube')
-const targetMesh = cube;
 
 // -------    Camera & Controls start   ----------
 
 // Define camera variables
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 1000);
 camera.position.set(0, 0, 5); // Initial position relative to the target
 scene.add(camera);
 
 const controls = new OrbitControls( camera, canvas );
 controls.enableZoom = false;
-controls.rotateSpeed  = .3
+controls.rotateSpeed  = .8;
 controls.update();
 
 // -------    Camera & Controls end   ----------
 
-// Renderer
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-})
-
 // Update renderer size
 renderer.setSize(sizes.width-1, sizes.height-1)
-console.log(sizes.width+" : "+sizes.height)
-    // Mettez à jour la taille du canvas en fonction de la nouvelle taille de la fenêtre
-    canvas.style.width = document.documentElement.clientWidth-1 + 'px';
-    canvas.style.height = document.documentElement.clientHeight-1 + 'px';
-    // Mettez à jour la taille de rendu de Three.js
-    renderer.setSize(document.documentElement.clientWidth-1, document.documentElement.clientHeight-1);
-    camera.aspect = document.documentElement.clientWidth / document.documentElement.clientHeight;
-    camera.updateProjectionMatrix();
+
+
+// Mettez à jour la taille du canvas en fonction de la nouvelle taille de la fenêtre
+canvas.style.width = document.documentElement.clientWidth-1 + 'px';
+canvas.style.height = document.documentElement.clientHeight-1 + 'px';
+// Mettez à jour la taille de rendu de Three.js
+renderer.setSize(document.documentElement.clientWidth-1, document.documentElement.clientHeight-1);
+camera.aspect = document.documentElement.clientWidth / document.documentElement.clientHeight;
+camera.updateProjectionMatrix();
 
 
 // Écoutez l'événement de redimensionnement de la fenêtre
@@ -125,10 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set initial mouse and cube position to the center of the screen
     prevMouseX = 0;
     prevMouseY = 0; 
-    // mouse.x = prevMouseX;
-    // mouse.y = prevMouseY;
-    cube.position.x = prevMouseX;
-    cube.position.y = prevMouseY;
 });
 
 // Update mouse coordinates on mouse move
@@ -140,7 +123,7 @@ document.addEventListener('mousemove', (event) => {
 
         return; // Exit the event listener to avoid further processing
     }
-     
+
     // Normalize mouse coordinates to the range [-1, 1]
     const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
     const mouseY = (event.clientY / window.innerHeight) * 2 + 1;
@@ -156,21 +139,21 @@ document.addEventListener('mousemove', (event) => {
     moveCamera(deltaX, deltaY);
 
     // Rotate the cube based on mouse movement
-    rotateCube(deltaX, deltaY);
+    rotateMagazine(deltaX, deltaY);
 });
 
 function moveCamera(deltaX: number, deltaY: number) {
     // Define movement speed
-    const movementSpeed = 0.05;
+    const movementSpeed = 0.1;
 
     // Calculate new position relative to the target
     const newPosition = camera.position.clone();
 
     // Rotate camera around the target (horizontal movement)
-    newPosition.applyAxisAngle(new THREE.Vector3(0, 1, 0), - deltaX * movementSpeed);
+    newPosition.applyAxisAngle(new THREE.Vector3(0, 1, 0), - deltaY * movementSpeed);
 
     // Move camera up or down (vertical movement)
-    newPosition.applyAxisAngle(new THREE.Vector3(1, 0, 0), - deltaY * movementSpeed);
+    newPosition.applyAxisAngle(new THREE.Vector3(1, 0, 0), - deltaX * movementSpeed);
 
     // Set the new camera position
     camera.position.copy(newPosition);
@@ -180,13 +163,13 @@ function moveCamera(deltaX: number, deltaY: number) {
 }
 
 
-function rotateCube(deltaX: number, deltaY: number) {
+function rotateMagazine(deltaX: number, deltaY: number) {
     // Define rotation speed for the cube
-    const rotationSpeed =.2;
+    const rotationSpeed = 0.15;
 
     // Rotate the cube based on mouse movement
-    cube.rotation.y += deltaX * rotationSpeed;
-    cube.rotation.x += deltaY * rotationSpeed;
+    magazine.rotation.y += deltaX * rotationSpeed;
+    magazine.rotation.x -= deltaY * rotationSpeed;
 }
 
 // Rotate particles group
