@@ -5,7 +5,7 @@ export const setParticles = (scene : any, textureLoader : any) => {
   const particlesCount = 500;
   const positions = new Float32Array(particlesCount * 3)
   for (let i = 0; i < particlesCount * 3; i++) {
-      positions[i] = (Math.random() - 0.5) * 10git 0
+      positions[i] = (Math.random() - 0.5) * 100
   }
   
   particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
