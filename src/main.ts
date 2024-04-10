@@ -139,7 +139,7 @@ document.addEventListener('mousemove', (event) => {
     moveCamera(deltaX, deltaY);
 
     // Rotate the cube based on mouse movement
-    // rotateMagazine(deltaX, deltaY);
+    rotateMagazine(deltaX, deltaY);
 });
 
 function moveCamera(deltaX: number, deltaY: number) {
@@ -168,8 +168,8 @@ function rotateMagazine(deltaX: number, deltaY: number) {
     const rotationSpeed = 0.15;
 
     // Rotate the cube based on mouse movement
-    magazine.rotation.y += deltaY * rotationSpeed;
-    // magazine.rotation.x -= deltaX * rotationSpeed;
+    magazine.rotation.y += deltaX * rotationSpeed;
+    magazine.rotation.x -= deltaY * rotationSpeed;
 }
 
 // Rotate particles group
