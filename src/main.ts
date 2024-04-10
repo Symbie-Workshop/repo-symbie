@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { setupRenderer } from './setupRenderer'
 import { setupScene, SceneSetupResult , createGLTFModel} from './sceneSetup';
-import { materializeTexture } from './materializeTexture';
+// import { materializeTexture } from './materializeTexture';
 import { bgRotationSystem } from './bgRotationSystem';
 import { setParticles } from './setParticles';
 
@@ -15,7 +15,6 @@ const { scene, sizes, canvas, textureLoader }: SceneSetupResult = setupScene();
 
 let magazine :any , targetMesh: any;
 // Load custom texture
-const testTexture = textureLoader.load('/textures/test.jpg') //load custom texture out of sceneSetup
 
 // const mouse = new THREE.Vector2()
 
@@ -53,9 +52,7 @@ magazinePromise.then((createdMagazine: any) => {
     console.error("Error loading magazine:", error);
 });
 
-const materialTest: any = materializeTexture(testTexture);
-
-bgRotationSystem(scene,materialTest);
+bgRotationSystem(scene);
 
 // -------    Particles    ----------
 const particles = setParticles(textureLoader);

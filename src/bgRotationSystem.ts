@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 
-export function bgRotationSystem(scene: any, texture: any): any {
+export function bgRotationSystem(scene: any): any {
 
     function getRandomNumber(min: number, max: number): number {
         return Math.random() * (max - min) + min;
