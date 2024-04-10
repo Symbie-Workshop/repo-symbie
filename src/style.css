@@ -41,12 +41,13 @@ h1 {
   height: 100%;
 }
 .header {
-  position: absolute;
+  position: fixed;
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
   top: 2%;
+  z-index: 999;
 
 }
 .logo{
@@ -89,6 +90,13 @@ h1 {
 .hide {
   display: none;
 }
+.showBtn {
+  display: block;
+  position: absolute;
+  right:5%;
+  top: 5%;
+  cursor: pointer;;
+}
 
 .show {
   background-color: rgb(255 255 255 / 30%);
@@ -107,13 +115,6 @@ h1 {
   padding: 20px;
 }
 
-#closeBtnCredits, #closeBtnInfos{
-  position: absolute;
-  right: 0;
-  top: 0;
-  cursor: pointer;
-}
-
 .infoContentBox, .creditsContentBox{
   position: relative;
   width: 100%;
@@ -124,6 +125,7 @@ h1 {
   font-size: larger;
   align-items: center;
   justify-content: center;
+  padding-top: 50px;
 }
 
 .contactBox{
@@ -143,7 +145,7 @@ h1 {
 }
 
 .contactInfo, .creditInfo {
-  padding: 15px; /* Padding inside each contact info box */
+  padding: 5px; /* Padding inside each contact info box */
   display: flex; /* Use flexbox for internal alignment */
   flex-direction: column; /* Stack elements vertically */
   justify-content: center; /* Center content vertically */
@@ -154,11 +156,16 @@ h1 {
 .contactInfo a {
   color: #007bff; /* Bright link color for contrast */
   text-decoration: none; /* No underline on links */
-  margin-top: 5px; /* Space out the link a bit */
 }
 
 .contactInfo a:hover {
   text-decoration: underline; /* Underline on hover for clear interactivity */
+}
+
+.creditInfo p {
+  margin: 5px 0;
+  font-style: italic;
+  opacity: 60%;
 }
 
 @media (max-width: 600px) {

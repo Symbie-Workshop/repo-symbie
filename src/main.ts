@@ -4,8 +4,9 @@ import GUI from 'lil-gui'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js'
 import {TextGeometry} from 'three/addons/geometries/TextGeometry.js'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-import { setupScene, SceneSetupResult } from './sceneSetup';
+import { setupScene, SceneSetupResult , createGLTFModel} from './sceneSetup';
 
 import { bgRotationSystem } from './bgRotationSystem';
 
@@ -16,19 +17,25 @@ const { scene, sizes, canvas, matcapTexture, textureLoader }: SceneSetupResult =
 const mouse = new THREE.Vector2()
 
 //////// FUTURE BOOK //////////
-// Geometry
-let cubeGeometry = new THREE.BoxGeometry(1, 1, 1); // Adjust the size as needed
 
-// Material
-const material = new THREE.MeshNormalMaterial( {
-    normalScale: new THREE.Vector2( 0.15, 0.15 ),
-    matcap: matcapTexture
-} );
 
-// Mesh
-const cube = new THREE.Mesh( cubeGeometry, material );
-// Add the mesh to the scene
-scene.add(cube);
+const ambientLight = new THREE.AmbientLight(0xffffff);
+ambientLight.intensity = 10;
+ambientLight.position.set(0, 0, 1);
+scene.add(ambientLight);
+
+
+// 3D book
+const magazine = await createGLTFModel(
+    '/magazine.glb', // url
+    [0, 0, -1.5], // position
+    [Math.PI / 2,  0 , 0], // rotation to set the plane upright
+    [8, 8, 8], // scale
+  );
+
+console.log(magazine.scene);
+scene.add(magazine.scene);
+
 
 
 bgRotationSystem(scene,matcapTexture);
@@ -48,7 +55,7 @@ const particleTexture = textureLoader.load('/textures/5.png')
 const particlesMaterial = new THREE.PointsMaterial({
     size: 0.4,
     sizeAttenuation: true,
-    color: '#a67c00',
+    color: '#000000',
     transparent: true,
     alphaMap: particleTexture,
     alphaTest: 0.001,
@@ -63,7 +70,7 @@ scene.add(particles)
 
 
 // Define the target mesh (assuming you have a cube mesh named 'cube')
-const targetMesh = cube;
+const targetMesh = magazine;
 
 // -------    Camera & Controls start   ----------
 
@@ -129,7 +136,7 @@ document.addEventListener('mousemove', (event) => {
     moveCamera(deltaX, deltaY);
 
     // Rotate the cube based on mouse movement
-    rotateCube(deltaX, deltaY);
+    rotateMagazine(deltaX, deltaY);
 });
 
 function moveCamera(deltaX: number, deltaY: number) {
@@ -153,13 +160,13 @@ function moveCamera(deltaX: number, deltaY: number) {
 }
 
 
-function rotateCube(deltaX: number, deltaY: number) {
+function rotateMagazine(deltaX: number, deltaY: number) {
     // Define rotation speed for the cube
     const rotationSpeed =.2;
 
     // Rotate the cube based on mouse movement
-    cube.rotation.y += deltaX * rotationSpeed;
-    cube.rotation.x += deltaY * rotationSpeed;
+    magazine.rotation.y += deltaX * rotationSpeed;
+    magazine.rotation.x += deltaY * rotationSpeed;
 }
 
 // Rotate particles group

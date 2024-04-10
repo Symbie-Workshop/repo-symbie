@@ -5,6 +5,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js'
 import {TextGeometry} from 'three/addons/geometries/TextGeometry.js'
 
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 import ChackraFont from '../public/Chakra Petch_Bold.json'
 
@@ -44,3 +45,23 @@ export function setupScene(): SceneSetupResult {
 
     return { scene, sizes, canvas, matcapTexture, textureLoader };
 }
+
+export function createGLTFModel( url : string, position : any, rotation : any, scale : any) {
+    // Instantiate a loader
+    const gltfLoader = new GLTFLoader();
+    //   console.info("LOADIG 3D OBJECT ");
+    // Use a promise to handle the asynchronous loading
+    return new Promise((resolve, reject) => {
+      gltfLoader.load(
+        url,
+        (gltf : any) => {
+          gltf.scene.scale.set(...scale);
+          gltf.scene.position.set(...position);
+          gltf.scene.rotation.set(...rotation);
+          resolve(gltf);
+        },
+        undefined,
+        reject
+      );
+    });
+  }
