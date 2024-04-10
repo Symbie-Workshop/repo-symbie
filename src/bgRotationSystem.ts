@@ -8,7 +8,7 @@ import {TextGeometry} from 'three/addons/geometries/TextGeometry.js'
 
 import ChackraFont from '../public/Chakra Petch_Bold.json'
 
-export function bgRotationSystem(scene: THREE.Scene, texture:THREE.Material): THREE.Mesh {
+export function bgRotationSystem(scene: THREE.Scene, texture:THREE.MeshBasicMaterial): THREE.Mesh {
 
     function getRandomNumber(min: number, max: number): number {
         return Math.random() * (max - min) + min;
@@ -17,11 +17,6 @@ export function bgRotationSystem(scene: THREE.Scene, texture:THREE.Material): TH
     // Geometry
     let cubeGeometry = new THREE.BoxGeometry(8, 4.5, 0.01); // Adjust the size as needed
 
-    // Material
-    const material = new THREE.MeshNormalMaterial( {
-        normalScale: new THREE.Vector2( 0.15, 0.15 ),
-        matcap: texture
-    } );
 
     // Définir le point central autour duquel placer les cubes
     const centerPoint = new THREE.Vector3(0, 0, 0); // Centre de la scène
@@ -46,7 +41,7 @@ export function bgRotationSystem(scene: THREE.Scene, texture:THREE.Material): TH
         const z = centerPoint.z + radius * Math.sin(angle);
 
         // Créer le cube
-        const cube = new THREE.Mesh(cubeGeometry, material);
+        const cube = new THREE.Mesh(cubeGeometry, texture);
 
         // Positionner le cube aux coordonnées calculées
         cube.position.set(x, centerPoint.y, z);

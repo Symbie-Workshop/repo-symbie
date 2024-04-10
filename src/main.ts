@@ -7,11 +7,13 @@ import {TextGeometry} from 'three/addons/geometries/TextGeometry.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 import { setupScene, SceneSetupResult , createGLTFModel} from './sceneSetup';
-
+import { materializeTexture } from './materializeTexture';
 import { bgRotationSystem } from './bgRotationSystem';
 
 // Initialisation de la scène - Window Size - canvas
 const { scene, sizes, canvas, matcapTexture, textureLoader }: SceneSetupResult = setupScene();
+
+const testTexture = textureLoader.load('/textures/test.jpg') //load custom texture out of sceneSetup
 
 // Mouse
 const mouse = new THREE.Vector2()
@@ -36,9 +38,26 @@ const magazine = await createGLTFModel(
 console.log(magazine.scene);
 scene.add(magazine.scene);
 
+// Geometry
+let cubeGeometry = new THREE.BoxGeometry(1, 1, 1); // Adjust the size as needed
+
+    // Material
+    const material = new THREE.MeshNormalMaterial( {
+        normalScale: new THREE.Vector2( 0.15, 0.15 ),
+        map: matcapTexture
+    } );
+
+const materialTest: THREE.MeshBasicMaterial = materializeTexture(testTexture);
+
+console.log(materialTest)
+
+// Mesh
+const cube = new THREE.Mesh( cubeGeometry, material );
+// Add the mesh to the scene
+scene.add(cube);
 
 
-bgRotationSystem(scene,matcapTexture);
+bgRotationSystem(scene,materialTest);
 
 // -------    Particles start   ----------
  
@@ -93,7 +112,28 @@ const renderer = new THREE.WebGLRenderer({
 })
 
 // Update renderer size
-renderer.setSize(sizes.width, sizes.height)
+renderer.setSize(sizes.width-1, sizes.height-1)
+console.log(sizes.width+" : "+sizes.height)
+    // Mettez à jour la taille du canvas en fonction de la nouvelle taille de la fenêtre
+    canvas.style.width = document.documentElement.clientWidth-1 + 'px';
+    canvas.style.height = document.documentElement.clientHeight-1 + 'px';
+    // Mettez à jour la taille de rendu de Three.js
+    renderer.setSize(document.documentElement.clientWidth-1, document.documentElement.clientHeight-1);
+    camera.aspect = document.documentElement.clientWidth / document.documentElement.clientHeight;
+    camera.updateProjectionMatrix();
+
+
+// Écoutez l'événement de redimensionnement de la fenêtre
+window.addEventListener('resize', () => {
+    // Mettez à jour la taille du canvas en fonction de la nouvelle taille de la fenêtre
+    canvas.style.width = document.documentElement.clientWidth-1 + 'px';
+    canvas.style.height = document.documentElement.clientHeight-1 + 'px';
+    // Mettez à jour la taille de rendu de Three.js
+    renderer.setSize(document.documentElement.clientWidth-1, document.documentElement.clientHeight-1);
+    camera.aspect = document.documentElement.clientWidth / document.documentElement.clientHeight;
+    camera.updateProjectionMatrix();
+});
+
 
 // Define mouse variables
 let prevMouseX: number | null = null;
@@ -106,8 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set initial mouse and cube position to the center of the screen
     prevMouseX = 0;
     prevMouseY = 0; 
-    mouse.x = prevMouseX;
-    mouse.y = prevMouseY;
+    // mouse.x = prevMouseX;
+    // mouse.y = prevMouseY;
     cube.position.x = prevMouseX;
     cube.position.y = prevMouseY;
 });
@@ -117,13 +157,14 @@ document.addEventListener('mousemove', (event) => {
     // Capture initial mouse position if it hasn't been captured yet
     if (!prevMouseX || !prevMouseY) {
         prevMouseX = (event.clientX / window.innerWidth) * 2 - 1;
-        prevMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        prevMouseY = (event.clientY / window.innerHeight) * 2 + 1;
+
         return; // Exit the event listener to avoid further processing
     }
      
     // Normalize mouse coordinates to the range [-1, 1]
     const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+    const mouseY = (event.clientY / window.innerHeight) * 2 + 1;
     // Calculate the change in mouse position
     const deltaX = mouseX - prevMouseX;
     const deltaY = mouseY - prevMouseY;
@@ -147,10 +188,10 @@ function moveCamera(deltaX: number, deltaY: number) {
     const newPosition = camera.position.clone();
 
     // Rotate camera around the target (horizontal movement)
-    newPosition.applyAxisAngle(new THREE.Vector3(0, 1, 0), - deltaY * movementSpeed);
+    newPosition.applyAxisAngle(new THREE.Vector3(0, 1, 0), - deltaX * movementSpeed);
 
     // Move camera up or down (vertical movement)
-    newPosition.applyAxisAngle(new THREE.Vector3(1, 0, 0), - deltaX * movementSpeed);
+    newPosition.applyAxisAngle(new THREE.Vector3(1, 0, 0), - deltaY * movementSpeed);
 
     // Set the new camera position
     camera.position.copy(newPosition);
