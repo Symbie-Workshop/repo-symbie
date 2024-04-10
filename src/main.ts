@@ -88,7 +88,6 @@ controls.update();
 // Renderer
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
-
 })
 
 // Update renderer size
