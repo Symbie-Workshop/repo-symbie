@@ -115,15 +115,15 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('mousemove', (event) => {
     // Capture initial mouse position if it hasn't been captured yet
     if (!prevMouseX || !prevMouseY) {
-        prevMouseX = (event.clientX / window.innerWidth) * 2 - 1;
-        prevMouseY = (event.clientY / window.innerHeight) * 2 + 1;
+        prevMouseX = (event.clientY / window.innerWidth) * 2 - 1;
+        prevMouseY = (event.clientX / window.innerHeight) * 2 + 1;
 
         return; // Exit the event listener to avoid further processing
     }
 
     // Normalize mouse coordinates to the range [-1, 1]
-    const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-    const mouseY = (event.clientY / window.innerHeight) * 2 + 1;
+    const mouseX = (event.clientY / window.innerWidth) * 2 - 1;
+    const mouseY = (event.clientX / window.innerHeight) * 2 + 1;
     // Calculate the change in mouse position
     const deltaX = mouseX - prevMouseX;
     const deltaY = mouseY - prevMouseY;
@@ -156,7 +156,7 @@ function moveCamera(deltaX: number, deltaY: number) {
     camera.position.copy(newPosition);
 
     // Make the camera always look at the target
-    camera.lookAt(targetMesh.position);
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
 }
 
 
@@ -165,8 +165,8 @@ function rotateMagazine(deltaX: number, deltaY: number) {
     const rotationSpeed = 0.15;
 
     // Rotate the cube based on mouse movement
-    magazine.rotation.y += deltaX * rotationSpeed;
-    magazine.rotation.x -= deltaY * rotationSpeed;
+    magazine.rotation.z -= deltaY * rotationSpeed;
+    magazine.rotation.x += deltaX * rotationSpeed;
 }
 
 // Rotate particles group
