@@ -62,19 +62,18 @@ function showMenu(context: string) {
 // Function to hide the menu
 function hideMenu(context: string) {
     if (context === 'infos'){
+        if (infoLayout){
+            infoLayout.classList.remove('show');
+            infoLayout.classList.add('hide');    
 
-    if (infoLayout){
-        infoLayout.classList.remove('show');
-        infoLayout.classList.add('hide');    
-
-    }
+        }
     }else {
         if (creditsLayout){
             creditsLayout.classList.remove('show');
             creditsLayout.classList.add('hide');        
         }
     }
-    closeButton!.classList.remove('show');
+    closeButton!.classList.remove('showBtn');
     closeButton!.classList.add('hide');  
 }
 

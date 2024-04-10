@@ -1,21 +1,11 @@
-import * as THREE from 'three'
-import gsap from 'gsap'
-import GUI from 'lil-gui'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js'
-import {TextGeometry} from 'three/addons/geometries/TextGeometry.js'
-
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-
-import ChackraFont from '../public/Chakra Petch_Bold.json';
-
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { SetAmbientLighting } from './LightHelper';
 import { setSkySphere } from './skyhelper';
-import { setupRenderer } from '../helpers/RendererHelper.js'
 
 
 export interface SceneSetupResult {
-    scene: THREE.Scene;
+    scene: any;
     sizes: { width: number; height: number };
     canvas: any;
     matcapTexture:any;

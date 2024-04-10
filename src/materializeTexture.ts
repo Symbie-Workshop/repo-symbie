@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 
-export function materializeTexture(texture:THREE.Texture): THREE.MeshBasicMaterial {
+export function materializeTexture(texture: any): any {
 
     // Material
     const material = new THREE.MeshBasicMaterial( {

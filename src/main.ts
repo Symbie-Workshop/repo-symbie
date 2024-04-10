@@ -1,12 +1,7 @@
 import * as THREE from 'three'
-import gsap from 'gsap'
-import GUI from 'lil-gui'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js'
-import {TextGeometry} from 'three/addons/geometries/TextGeometry.js'
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { setupRenderer } from './setupRenderer'
 
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { setupRenderer } from './setupRenderer'
 import { setupScene, SceneSetupResult , createGLTFModel} from './sceneSetup';
 import { materializeTexture } from './materializeTexture';
 import { bgRotationSystem } from './bgRotationSystem';
@@ -16,35 +11,56 @@ import { setParticles } from './setParticles';
 const renderer = setupRenderer();
 
 // Set up the scene
-const { scene, sizes, canvas, matcapTexture, textureLoader }: SceneSetupResult = setupScene();
+const { scene, sizes, canvas, textureLoader }: SceneSetupResult = setupScene();
 
+let magazine :any , targetMesh: any;
 // Load custom texture
 const testTexture = textureLoader.load('/textures/test.jpg') //load custom texture out of sceneSetup
 
-// Mouse
-const mouse = new THREE.Vector2()
+// const mouse = new THREE.Vector2()
 
-// 3D book
-const magazine = await createGLTFModel(
-    '/magazine.glb', // url
-    [0, 0, -1.5], // position
-    [Math.PI / 2,  0 , 0], // rotation to set the plane upright
-    [8, 8, 8], // scale
-  );
+// Function to load the model and add it to the scene
+async function loadAndAddModel() {
+    try {
+        return await createGLTFModel(
+            '/magazine.glb',
+            [0, 0,-1.5],
+            [Math.PI / 2, 0, 0],
+            [8, 8, 8]
+        );
+  
+    } catch (error) {
+        console.error("Failed to load the model", error);
+        return null; // or handle the error as appropriate
+    }
+}
+// Immediately invoked async function expression to load the model
+const magazinePromise = (async () => {
+    return await loadAndAddModel();
+})();
 
-scene.add(magazine!.scene);
+// Later in your code, when you need to use the magazine model
+magazinePromise.then((createdMagazine: any) => {
+    if (createdMagazine) {
+        // Use magazine here, after it's been loaded
+        scene.add(createdMagazine.scene);
+        magazine = createdMagazine.scene;
+        console.log("Magazine loaded successfully", magazine);
+        // Define the target mesh 
+        targetMesh = magazine;
+    }
+}).catch(error => {
+    console.error("Error loading magazine:", error);
+});
 
-const materialTest: THREE.MeshBasicMaterial = materializeTexture(testTexture);
+const materialTest: any = materializeTexture(testTexture);
 
 bgRotationSystem(scene,materialTest);
 
 // -------    Particles    ----------
-const particles = setParticles(scene, textureLoader);
+const particles = setParticles(textureLoader);
 scene.add(particles);
 
-
-// Define the target mesh (assuming you have a cube mesh named 'cube')
-const targetMesh = magazine;
 
 // -------    Camera & Controls start   ----------
 
@@ -107,7 +123,7 @@ document.addEventListener('mousemove', (event) => {
 
         return; // Exit the event listener to avoid further processing
     }
-     
+
     // Normalize mouse coordinates to the range [-1, 1]
     const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
     const mouseY = (event.clientY / window.innerHeight) * 2 + 1;
@@ -134,10 +150,10 @@ function moveCamera(deltaX: number, deltaY: number) {
     const newPosition = camera.position.clone();
 
     // Rotate camera around the target (horizontal movement)
-    newPosition.applyAxisAngle(new THREE.Vector3(0, 1, 0), - deltaX * movementSpeed);
+    newPosition.applyAxisAngle(new THREE.Vector3(0, 1, 0), - deltaY * movementSpeed);
 
     // Move camera up or down (vertical movement)
-    newPosition.applyAxisAngle(new THREE.Vector3(1, 0, 0), - deltaY * movementSpeed);
+    newPosition.applyAxisAngle(new THREE.Vector3(1, 0, 0), - deltaX * movementSpeed);
 
     // Set the new camera position
     camera.position.copy(newPosition);
@@ -149,7 +165,7 @@ function moveCamera(deltaX: number, deltaY: number) {
 
 function rotateMagazine(deltaX: number, deltaY: number) {
     // Define rotation speed for the cube
-    const rotationSpeed =.2;
+    const rotationSpeed =.1;
 
     // Rotate the cube based on mouse movement
     magazine.rotation.y += deltaX * rotationSpeed;

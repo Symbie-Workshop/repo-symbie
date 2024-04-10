@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export const setParticles = (scene : any, textureLoader : any) => {
+export const setParticles = (textureLoader : any) => {
   const particlesGeometry = new THREE.BufferGeometry();
   const particlesCount = 500;
   const positions = new Float32Array(particlesCount * 3)

@@ -1,14 +1,6 @@
 import * as THREE from 'three'
-import gsap from 'gsap'
-import GUI from 'lil-gui'
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { FontLoader } from 'three/addons/loaders/FontLoader.js'
-import {TextGeometry} from 'three/addons/geometries/TextGeometry.js'
 
-
-import ChackraFont from '../public/Chakra Petch_Bold.json'
-
-export function bgRotationSystem(scene: THREE.Scene, texture:THREE.MeshBasicMaterial): THREE.Mesh {
+export function bgRotationSystem(scene: any, texture: any): any {
 
     function getRandomNumber(min: number, max: number): number {
         return Math.random() * (max - min) + min;
@@ -65,7 +57,7 @@ export function bgRotationSystem(scene: THREE.Scene, texture:THREE.MeshBasicMate
             // Faire tourner le groupe de cubes autour du point central
             cubeGroup.rotation.y += 0.005; // Vitesse de rotation
 
-            cubeGroup.children.forEach((cube: THREE.Mesh) => {
+            cubeGroup.children.forEach((cube: any) => {
 
                 const cubeAmp = getRandomNumber(0.001,0.01);
 

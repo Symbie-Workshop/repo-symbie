@@ -41,17 +41,16 @@ h1 {
   position: relative;
 }
 .header {
-  position: fixed;
+  position: absolute;
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
   top: 2%;
   z-index: 999;
-
 }
 .logo{
-  width: 40%;
+  width: 200px;
 }
 .footer {
   position: absolute;
@@ -108,11 +107,11 @@ h1 {
   position: absolute;
   top: 0;
   left: 0;
-  width: auto;
+  width: 100%;
   height: 100%;
   overflow-y: scroll;
   backdrop-filter: blur(10px);
-  padding: 20px;
+  padding: 40px;
   box-sizing: border-box;
 }
 
