@@ -26,7 +26,7 @@ async function loadAndAddModel() {
             '/magazine.glb',
             [0, 0,-1.5],
             [Math.PI / 2, 0, 0],
-            [8, 8, 8]
+            [9,9,9]
         );
   
     } catch (error) {
@@ -139,12 +139,12 @@ document.addEventListener('mousemove', (event) => {
     moveCamera(deltaX, deltaY);
 
     // Rotate the cube based on mouse movement
-    rotateMagazine(deltaX, deltaY);
+    // rotateMagazine(deltaX, deltaY);
 });
 
 function moveCamera(deltaX: number, deltaY: number) {
     // Define movement speed
-    const movementSpeed = 0.05;
+    const movementSpeed = 0.1;
 
     // Calculate new position relative to the target
     const newPosition = camera.position.clone();
@@ -165,11 +165,11 @@ function moveCamera(deltaX: number, deltaY: number) {
 
 function rotateMagazine(deltaX: number, deltaY: number) {
     // Define rotation speed for the cube
-    const rotationSpeed =.1;
+    const rotationSpeed = 0.15;
 
     // Rotate the cube based on mouse movement
-    magazine.rotation.y += deltaX * rotationSpeed;
-    magazine.rotation.x += deltaY * rotationSpeed;
+    magazine.rotation.y += deltaY * rotationSpeed;
+    // magazine.rotation.x -= deltaX * rotationSpeed;
 }
 
 // Rotate particles group
