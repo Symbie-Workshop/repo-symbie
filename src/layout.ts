@@ -4,6 +4,7 @@ const buttonCredits = document.getElementById('btnCredits');
 const infoLayout = document.getElementById('infoLayout');
 const creditsLayout = document.getElementById('creditsLayout');
 const closeButton = document.getElementById('closeBtn');
+const PdfBtn = document.getElementById('btnPdf');
 
 const contactInfos: { title: string, link: string }[] = [
     {
@@ -49,11 +50,13 @@ function showMenu(context: string) {
         infoLayout.classList.remove('hide');
         infoLayout.classList.add('show');
             }
-    }else {
+    }else if(context === 'credits'){
         if (creditsLayout){
             creditsLayout.classList.remove('hide');
             creditsLayout.classList.add('show');
-                    }
+        }
+    }else if(context === 'pdf'){
+        window.location.href = "index.html";
     }
     closeButton!.classList.add('showBtn');
 
@@ -67,7 +70,7 @@ function hideMenu(context: string) {
             infoLayout.classList.add('hide');    
 
         }
-    }else {
+    }else{
         if (creditsLayout){
             creditsLayout.classList.remove('show');
             creditsLayout.classList.add('hide');        
@@ -123,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Attach the click event listener to the show menu button
 buttonInfo!.addEventListener('click', () => showMenu('infos'));
 buttonCredits!.addEventListener('click', () => showMenu('credits'));
+PdfBtn!.addEventListener('click', () => showMenu('pdf'));
 
 // Attach the click event listener to the close menu button
 closeButton!.addEventListener('click', () => hideMenu(contextClick));

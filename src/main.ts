@@ -164,9 +164,13 @@ function rotateMagazine(deltaX: number, deltaY: number) {
     // Define rotation speed for the cube
     const rotationSpeed = 0.15;
 
-    // Rotate the cube based on mouse movement
-    magazine.rotation.z -= deltaY * rotationSpeed;
-    magazine.rotation.x += deltaX * rotationSpeed;
+    if(magazine){
+
+        // Rotate the cube based on mouse movement
+        magazine.rotation.z -= deltaY * rotationSpeed;
+        magazine.rotation.x += deltaX * rotationSpeed;
+
+    }
 }
 
 // Rotate particles group
