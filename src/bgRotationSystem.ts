@@ -9,7 +9,7 @@ export function bgRotationSystem(scene: any): any {
     
 
     // Geometry
-    let cubeGeometry = new THREE.PlaneGeometry(4.5, 8, 132, 132); // Adjust the size as needed
+    let cubeGeometry = new THREE.PlaneGeometry(4, 6, 320, 320); // Adjust the size as needed
 
 
     // Définir le point central autour duquel placer les cubes
@@ -176,8 +176,8 @@ const vertexShader = `
         vUv = uv;
       
         vec3 pos = position;
-        float noiseFreq = 0.10; //amp
-        float noiseAmp = 0.10; 
+        float noiseFreq = 1.0; //amp
+        float noiseAmp = 0.09; 
         vec3 noisePos = vec3(pos.x * noiseFreq + uTime, pos.y, pos.z);
         pos.z += snoise(noisePos) * noiseAmp;
       
