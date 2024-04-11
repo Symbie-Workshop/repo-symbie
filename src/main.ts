@@ -5,7 +5,7 @@ import { setupRenderer } from './setupRenderer'
 import { setupScene, SceneSetupResult , createGLTFModel} from './sceneSetup';
 // import { materializeTexture } from './materializeTexture';
 import { bgRotationSystem } from './bgRotationSystem';
-import { setParticles } from './setParticles';
+// import { setParticles } from './setParticles';
 
 // Renderer
 const renderer = setupRenderer();
@@ -55,8 +55,8 @@ magazinePromise.then((createdMagazine: any) => {
 bgRotationSystem(scene);
 
 // -------    Particles    ----------
-const particles = setParticles(textureLoader);
-scene.add(particles);
+// const particles = setParticles(textureLoader);
+// scene.add(particles);
 
 
 // -------    Camera & Controls start   ----------
@@ -170,15 +170,15 @@ function rotateMagazine(deltaX: number, deltaY: number) {
 }
 
 // Rotate particles group
-function rotateParticles() {
-    particles.rotation.y += 0.001;
-}
+// function rotateParticles() {
+//     particles.rotation.y += 0.001;
+// }
 
 // Clock
 // const clock = new THREE.Clock();
 
 const tick = () => {
-    rotateParticles();
+    // rotateParticles();
     // Render
     renderer.render(scene, camera);
 

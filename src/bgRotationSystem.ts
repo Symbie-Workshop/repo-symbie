@@ -176,8 +176,8 @@ const vertexShader = `
         vUv = uv;
       
         vec3 pos = position;
-        float noiseFreq = 1.0; //amp
-        float noiseAmp = 0.09; 
+        float noiseFreq = 0.8; //amp
+        float noiseAmp = 0.14; 
         vec3 noisePos = vec3(pos.x * noiseFreq + uTime, pos.y, pos.z);
         pos.z += snoise(noisePos) * noiseAmp;
       
