@@ -298,7 +298,7 @@ const materialArray = [
         requestAnimationFrame(animate);
 
             // Faire tourner le groupe de cubes autour du point central
-            cubeGroup.rotation.y += 0.005; // Vitesse de rotation
+            cubeGroup.rotation.y += 0.003; // Vitesse de rotation
             let ik = 0;
 
             cubeGroup.children.forEach((cube: any) => {
