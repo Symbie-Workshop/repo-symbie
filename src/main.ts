@@ -6,6 +6,7 @@ import { setupScene, SceneSetupResult , createGLTFModel} from './sceneSetup';
 // import { materializeTexture } from './materializeTexture';
 import { bgRotationSystem } from './bgRotationSystem';
 // import { setParticles } from './setParticles';
+import { addRessource, resourceLoaded } from './ressourceLoadController';
 
 // Renderer
 const renderer = setupRenderer();
@@ -35,6 +36,7 @@ async function loadAndAddModel() {
 }
 // Immediately invoked async function expression to load the model
 const magazinePromise = (async () => {
+    addRessource();
     return await loadAndAddModel();
 })();
 
@@ -45,11 +47,13 @@ magazinePromise.then((createdMagazine: any) => {
         scene.add(createdMagazine.scene);
         magazine = createdMagazine.scene;
         console.log("Magazine loaded successfully", magazine);
+        resourceLoaded();
         // Define the target mesh 
         targetMesh = magazine;
     }
 }).catch(error => {
     console.error("Error loading magazine:", error);
+    resourceLoaded();
 });
 
 bgRotationSystem(scene);
