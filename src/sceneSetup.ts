@@ -9,7 +9,6 @@ export interface SceneSetupResult {
     sizes: { width: number; height: number };
     canvas: any;
     matcapTexture:any;
-    textureLoader:any;
 }
 
 const imagePath = '/sky.hdr';
@@ -46,7 +45,7 @@ export function setupScene(): SceneSetupResult {
 	setSkySphere(scene, imagePath);
 
     // Return the scene and sizes
-    return { scene, sizes, canvas, matcapTexture, textureLoader };
+    return { scene, sizes, canvas, matcapTexture };
 }
 
 export function createGLTFModel( url : string, position : any, rotation : any, scale : any) {

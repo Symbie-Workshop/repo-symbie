@@ -2,7 +2,7 @@ let ressourcesCount = 2;
 let ressourcesLoaded = 0;
 
 let load = document.getElementById('preloader');
-const gifElement = document.getElementById('preloader-image');
+//const gifElement = document.getElementById('preloader-image');
 
 export function addRessource() {
     //ressourcesCount++;

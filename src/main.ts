@@ -12,7 +12,7 @@ import { addRessource, resourceLoaded } from './ressourceLoadController';
 const renderer = setupRenderer();
 
 // Set up the scene
-const { scene, sizes, canvas, textureLoader }: SceneSetupResult = setupScene();
+const { scene, sizes, canvas }: SceneSetupResult = setupScene();
 
 let magazine :any , targetMesh: any;
 // Load custom texture
