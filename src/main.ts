@@ -14,7 +14,7 @@ const renderer = setupRenderer();
 // Set up the scene
 const { scene, sizes, canvas }: SceneSetupResult = setupScene();
 
-let magazine :any , targetMesh: any;
+let magazine :any ;
 // Load custom texture
 
 // const mouse = new THREE.Vector2()
@@ -48,8 +48,7 @@ magazinePromise.then((createdMagazine: any) => {
         magazine = createdMagazine.scene;
         console.log("Magazine loaded successfully", magazine);
         resourceLoaded();
-        // Define the target mesh 
-        targetMesh = magazine;
+
     }
 }).catch(error => {
     console.error("Error loading magazine:", error);
