@@ -183,6 +183,7 @@ h1 {
   font-family: Poppins,sans-serif;
   transition: all 0.3s;
   opacity: 1;
+  pointer-events: none;
 }
 #preloader img{
   width: 30%;
