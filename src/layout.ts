@@ -2,27 +2,27 @@
 const PdfBtn = document.getElementById('btnPdf');
 const buttonInfo = document.getElementById('btnInfos');
 const buttonCredits = document.getElementById('btnCredits');
+const header = document.getElementById('header');
 
 // 
 const infoLayout = document.getElementById('infoLayout');
 const creditsLayout = document.getElementById('creditsLayout');
 const closeButton = document.getElementById('closeBtn');
-const contactInfos: { title: string, link: string }[] = [
+const contactInfos: { title: string, label: string, link: string }[] = [
     {
         title: "Email",
-        link: "andredespouys@gmail.com"
+        label: "symbiemagazine@gmail.com",
+        link: "symbiemagazine@gmail.com",
     },
     {
         title: "Instagram",
-        link: "dedespouys"
+        label: "symbiemagazine",
+        link: "https://www.instagram.com/symbiemagazine/"
     },
     {
-        title: "Géré par",
-        link: "André le boss"
-    },
-    {
-        title: "Imprimé par ",
-        link: "MOI"
+        title: "Imprimé par",
+        label: "COREP Bordeaux Victoire",
+        link: "https://www.corep.fr/agence/corep-bordeaux-victoire/"
     },
 ];
 let contextClick : string = "";
@@ -46,7 +46,10 @@ const teamMembers : { name : string, poste : string}[]= [
 // Function to show the menu
 function showMenu(context: string) {
     console.log("Click")
-    if (context === 'infos'){
+    if (header !== null && header !== undefined) {
+        header.style.backgroundColor = "white";
+    }
+        if (context === 'infos'){
         if (infoLayout){
         infoLayout.classList.remove('hide');
         infoLayout.classList.add('show');
@@ -62,6 +65,9 @@ function showMenu(context: string) {
 }
 // Function to hide the menu
 function hideMenu(context: string) {
+    if (header !== null && header !== undefined) {
+        header.style.backgroundColor = "transparent";
+    }
     if (context === 'infos'){
         if (infoLayout){
             infoLayout.classList.remove('show');
@@ -93,7 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Assuming you want to display the title and make the link clickable
             infoDiv.innerHTML = `
                 <strong>${info.title}</strong> 
-                <a href="${info.link.startsWith('http') ? info.link : `mailto:${info.link}`}">${info.link}</a>
+                
+                <a href="${info.link.startsWith('http') ? info.link : `mailto:${info.link}`}">${info.label}</a>
             `;
 
             // Append the newly created div to the contactGrid

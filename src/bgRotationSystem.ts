@@ -264,8 +264,6 @@ const materialArray = [
 
 
 
-
-
     // Parcourir les cubes et les placer autour du point central
     for (let i = 0; i < numberOfCubes; i++) {
         // Calculer l'angle actuel
