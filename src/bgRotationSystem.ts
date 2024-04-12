@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { resourceLoaded } from './ressourceLoadController';
 
 export function bgRotationSystem(scene: any): any {
 
@@ -200,11 +201,11 @@ const fragmentShader = `
 `;
 
 const img_list = [
-    new THREE.TextureLoader().load('/pictures/000_1.jpg'),
-    new THREE.TextureLoader().load('/pictures/000_2.jpg'),
-    new THREE.TextureLoader().load('/pictures/6-min.jpg'),
-    new THREE.TextureLoader().load('/pictures/IMG_0681.jpg'),
-    new THREE.TextureLoader().load('/pictures/Quentin-3.jpg')
+    new THREE.TextureLoader().load('/pictures/000_1.jpg', function (){ resourceLoaded(); }),
+    new THREE.TextureLoader().load('/pictures/000_2.jpg', function (){ resourceLoaded(); }),
+    new THREE.TextureLoader().load('/pictures/6-min.jpg', function (){ resourceLoaded(); }),
+    new THREE.TextureLoader().load('/pictures/IMG_0681.jpg', function (){ resourceLoaded(); }),
+    new THREE.TextureLoader().load('/pictures/Quentin-3.jpg', function (){ resourceLoaded(); })
 ]
 
 // Création du matériau avec les shaders personnalisés
@@ -217,6 +218,7 @@ const customMaterial0 = new THREE.ShaderMaterial({
         uTexture: { value: img_list[0] } // Supposons que vous avez déjà une texture chargée
     }
 });
+
 const customMaterial1 = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
@@ -226,6 +228,7 @@ const customMaterial1 = new THREE.ShaderMaterial({
         uTexture: { value: img_list[1] } // Supposons que vous avez déjà une texture chargée
     }
 });
+
 const customMaterial2 = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
@@ -235,6 +238,7 @@ const customMaterial2 = new THREE.ShaderMaterial({
         uTexture: { value: img_list[2] } // Supposons que vous avez déjà une texture chargée
     }
 });
+
 const customMaterial3 = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
@@ -244,6 +248,7 @@ const customMaterial3 = new THREE.ShaderMaterial({
         uTexture: { value: img_list[3] } // Supposons que vous avez déjà une texture chargée
     }
 });
+
 const customMaterial4 = new THREE.ShaderMaterial({
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,

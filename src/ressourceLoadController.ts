@@ -1,7 +1,9 @@
-let ressourcesCount = 2;
+let ressourcesCount = 7;
 let ressourcesLoaded = 0;
+let percentage = 0;
 
 let load = document.getElementById('preloader');
+let bar = document.getElementById('bar');
 //const gifElement = document.getElementById('preloader-image');
 
 export function addRessource() {
@@ -19,6 +21,9 @@ export function addRessource() {
 // Fonction de gestionnaire d'événement pour les ressources chargées
 export function resourceLoaded() {
     ressourcesLoaded++;
+    percentage = (ressourcesLoaded / ressourcesCount) * 100;
+    if(bar) { bar.style.width = percentage+"%"; }
+    console.log("new ressource loaded: "+ressourcesLoaded);
     checkIfSceneLoaded();
 }
 
