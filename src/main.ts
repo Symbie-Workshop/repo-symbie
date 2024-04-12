@@ -24,7 +24,7 @@ async function loadAndAddModel() {
     try {
         return await createGLTFModel(
             '/magazine.glb',
-            [0, 0,-1.5],
+            [0, 0,0],
             [Math.PI / 2, 0, 0],
             [9,9,9]
         );
