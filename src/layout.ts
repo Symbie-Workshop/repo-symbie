@@ -7,7 +7,6 @@ const buttonCredits = document.getElementById('btnCredits');
 const infoLayout = document.getElementById('infoLayout');
 const creditsLayout = document.getElementById('creditsLayout');
 const closeButton = document.getElementById('closeBtn');
-const PdfBtn = document.getElementById('btnPdf');
 
 const contactInfos: { title: string, link: string, type:string , subtitle:string }[] = [
     {
