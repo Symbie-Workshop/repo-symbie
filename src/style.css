@@ -204,7 +204,7 @@ background-color: white;
   transition: all 0.3s;
 }
 
-.loader div{
+.loader #loadertxt{
   display: flex;
   flex-direction: column;
   width: fit-content;
@@ -213,6 +213,20 @@ background-color: white;
   transition: all 0.3s;
 }
 
+.loadBar{
+  width: 100px;
+  border: 3px solid black;
+  margin-top: 25px;
+}
+
+.bar{
+  background-color: black;
+  width: 0%;
+  height: 7px;
+  box-sizing: border-box;
+  border: 2px solid white;
+  transition: 0.3s;
+}
 
 @media (max-width: 600px) {
   #contactGrid {
