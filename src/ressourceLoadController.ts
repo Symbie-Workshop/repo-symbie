@@ -1,4 +1,4 @@
-let ressourcesCount = 2;
+let ressourcesCount = 7;
 let ressourcesLoaded = 0;
 
 let load = document.getElementById('preloader');
@@ -19,6 +19,7 @@ export function addRessource() {
 // Fonction de gestionnaire d'événement pour les ressources chargées
 export function resourceLoaded() {
     ressourcesLoaded++;
+    console.log("new ressource loaded: "+ressourcesLoaded);
     checkIfSceneLoaded();
 }
 

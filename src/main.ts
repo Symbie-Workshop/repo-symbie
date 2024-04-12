@@ -114,6 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
     prevMouseY = 0; 
 });
 
+document.addEventListener('load', () => {
+    console.log("load");
+});
+
 // Update mouse coordinates on mouse move
 document.addEventListener('mousemove', (event) => {
     // Capture initial mouse position if it hasn't been captured yet
