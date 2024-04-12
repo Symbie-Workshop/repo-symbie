@@ -1,11 +1,12 @@
 // Get the button, close button, and menu layout elements by their IDs
+const PdfBtn = document.getElementById('btnPdf');
 const buttonInfo = document.getElementById('btnInfos');
 const buttonCredits = document.getElementById('btnCredits');
+
+// 
 const infoLayout = document.getElementById('infoLayout');
 const creditsLayout = document.getElementById('creditsLayout');
 const closeButton = document.getElementById('closeBtn');
-const PdfBtn = document.getElementById('btnPdf');
-
 const contactInfos: { title: string, link: string }[] = [
     {
         title: "Email",
@@ -44,7 +45,7 @@ const teamMembers : { name : string, poste : string}[]= [
 
 // Function to show the menu
 function showMenu(context: string) {
-
+    console.log("Click")
     if (context === 'infos'){
         if (infoLayout){
         infoLayout.classList.remove('hide');
@@ -55,11 +56,8 @@ function showMenu(context: string) {
             creditsLayout.classList.remove('hide');
             creditsLayout.classList.add('show');
         }
-    }else if(context === 'pdf'){
-        window.location.href = "index.html";
     }
     closeButton!.classList.add('showBtn');
-
     contextClick = context;
 }
 // Function to hide the menu
@@ -84,7 +82,6 @@ function hideMenu(context: string) {
 document.addEventListener('DOMContentLoaded', () => {
     const contactGrid = document.getElementById('contactGrid');
     const creditsGrid = document.getElementById('creditsGrid');
-
     if (contactGrid) {
         // Corrected the loop to iterate through the array
         
@@ -105,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (creditsGrid) {
         // Corrected the loop to iterate through the array
-        
         teamMembers.forEach(info => {
             // Create a div or any other element as a container for each contact info
             const infoDiv = document.createElement('div');
@@ -126,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Attach the click event listener to the show menu button
 buttonInfo!.addEventListener('click', () => showMenu('infos'));
 buttonCredits!.addEventListener('click', () => showMenu('credits'));
-PdfBtn!.addEventListener('click', () => showMenu('pdf'));
+// PdfBtn!.addEventListener('click', () => showMenu('pdf'));
 
 // Attach the click event listener to the close menu button
 closeButton!.addEventListener('click', () => hideMenu(contextClick));
