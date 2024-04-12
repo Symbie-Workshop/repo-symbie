@@ -8,21 +8,29 @@ const header = document.getElementById('header');
 const infoLayout = document.getElementById('infoLayout');
 const creditsLayout = document.getElementById('creditsLayout');
 const closeButton = document.getElementById('closeBtn');
-const contactInfos: { title: string, label: string, link: string }[] = [
+
+const contactInfos: { title: string, link: string, type:string , subtitle:string }[] = [
+    {
+        title: "Directrice de la publication",
+        link: "Anaïs AKKOUCHE",
+        subtitle:"",
+        type: "mail"
+    },
     {
         title: "Email",
-        label: "symbiemagazine@gmail.com",
-        link: "symbiemagazine@gmail.com",
+        link: "andredespouys@gmail.com"
     },
     {
         title: "Instagram",
-        label: "symbiemagazine",
-        link: "https://www.instagram.com/symbiemagazine/"
+        link: "dedespouys"
     },
     {
-        title: "Imprimé par",
-        label: "COREP Bordeaux Victoire",
-        link: "https://www.corep.fr/agence/corep-bordeaux-victoire/"
+        title: "Géré par",
+        link: "André le boss"
+    },
+    {
+        title: "Imprimé par ",
+        link: "MOI"
     },
 ];
 let contextClick : string = "";
@@ -96,12 +104,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const infoDiv = document.createElement('div');
             infoDiv.classList.add('contactInfo'); // Add a class for potential styling
 
-            // Assuming you want to display the title and make the link clickable
-            infoDiv.innerHTML = `
+            if(info.type == "insta"){
+                infoDiv.innerHTML = `
+                <strong>${info.title}</strong> 
+                <a href="${info.link}">${info.subtitle}</a>
+            `;
+            }
+            if(info.type == "mail"){
+                infoDiv.innerHTML = `
+                <strong>${info.title}</strong> 
+                <a href="${info.link.startsWith('http') ? info.link : `mailto:${info.link}`}">${info.link}</a>
+            `;
+            }
+            else{ //mail
+                infoDiv.innerHTML = `
                 <strong>${info.title}</strong> 
                 
                 <a href="${info.link.startsWith('http') ? info.link : `mailto:${info.link}`}">${info.label}</a>
             `;
+            }
 
             // Append the newly created div to the contactGrid
             contactGrid.appendChild(infoDiv);
