@@ -9,7 +9,8 @@ const infoLayout = document.getElementById('infoLayout');
 const creditsLayout = document.getElementById('creditsLayout');
 const closeButton = document.getElementById('closeBtn');
 
-const contactInfos: { title: string, link: string, type:string , subtitle:string }[] = [
+
+const contactInfos: any[] = [
     {
         title: "Directrice de la publication",
         link: "Anaïs AKKOUCHE",
@@ -18,19 +19,18 @@ const contactInfos: { title: string, link: string, type:string , subtitle:string
     },
     {
         title: "Email",
-        link: "andredespouys@gmail.com"
+        label: "symbiemagazine@gmail.com",
+        link: "symbiemagazine@gmail.com",
     },
     {
         title: "Instagram",
-        link: "dedespouys"
+        label: "symbiemagazine",
+        link: "https://www.instagram.com/symbiemagazine/"
     },
     {
-        title: "Géré par",
-        link: "André le boss"
-    },
-    {
-        title: "Imprimé par ",
-        link: "MOI"
+        title: "Imprimé par",
+        label: "COREP Bordeaux Victoire",
+        link: "https://www.corep.fr/agence/corep-bordeaux-victoire/"
     },
 ];
 let contextClick : string = "";
