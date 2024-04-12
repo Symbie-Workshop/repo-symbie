@@ -7,6 +7,7 @@ import { setupScene, SceneSetupResult , createGLTFModel} from './sceneSetup';
 import { bgRotationSystem } from './bgRotationSystem';
 // import { setParticles } from './setParticles';
 import { addRessource, resourceLoaded } from './ressourceLoadController';
+import { loader } from './loaderLogic';
 
 // Renderer
 const renderer = setupRenderer();
@@ -16,6 +17,8 @@ const { scene, sizes, canvas }: SceneSetupResult = setupScene();
 
 let magazine :any ;
 // Load custom texture
+
+loader();
 
 // const mouse = new THREE.Vector2()
 
